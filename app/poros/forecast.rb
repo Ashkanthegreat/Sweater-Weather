@@ -1,11 +1,13 @@
 class Forecast
-  attr_reader :currently,
-              :daily,
-              :hourly
+  attr_reader :id,
+              :currently,
+              :hourly,
+              :daily
+
 
   def initialize(forecast_info)
-    @currently = forecast_info[:currently]
-    @daily = forecast_info[:daily]
+    @currently = forecast_info[:current]
     @hourly = forecast_info[:hourly]
+    @daily = forecast_info[:daily]
   end
 end
