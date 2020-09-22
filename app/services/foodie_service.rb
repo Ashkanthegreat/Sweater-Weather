@@ -1,6 +1,7 @@
 class FoodieService
   def self.get_rest_info(lat, lng, food_type)
     response = conn.get("/api/v2.1/search") do |f|
+      f.params[:count] = 1
       f.params[:q] = food_type
       f.params[:lat] = lat
       f.params[:lon] = lng
