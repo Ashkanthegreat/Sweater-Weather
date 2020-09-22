@@ -1,13 +1,15 @@
 class BackgroundService
-  def get_pic
-    response = conn.get()
+  def self.get_pic(location)
+    city = location.split(',').first
+    response = conn.get("/search/photos?query=#{city}")
+    JSON.parse(response.body, symbolize_names: true)
   end
 
   private
 
-  def conn
-    Faraday.new('https://api.openweathermap.org') do |f|
-      f.params[:appid] = "#{ENV['OPEN_WEATHER_KEY']}"
+  def self.conn
+    Faraday.new('https://api.unsplash.com/') do |f|
+      f.params[:client_id] = "#{ENV['UNSPLASH_KEY']}"
     end
   end
 end
