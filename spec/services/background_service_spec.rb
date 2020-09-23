@@ -14,5 +14,4 @@ RSpec.describe 'Background Service' do
     expect(service[:results][0][:urls]).to have_key :raw
     expect(service[:results][0][:urls][:raw]).to be_a String
   end
-
 end
