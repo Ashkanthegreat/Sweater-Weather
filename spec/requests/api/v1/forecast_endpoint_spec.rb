@@ -9,9 +9,6 @@ RSpec.describe 'Forecast endpoint', type: :request do
     expect(response).to be_successful
     expect(response.content_type).to eq('application/json')
 
-    forecast = JSON.parse(response.body, symbolize_names: true)
-
-    
   end
 
 end
