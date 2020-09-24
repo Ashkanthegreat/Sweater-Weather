@@ -1,5 +1,6 @@
 class Background
-  attr_reader :id
+  attr_reader :id,
+              :image
 
 
   def initialize(json)
