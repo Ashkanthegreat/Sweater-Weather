@@ -30,22 +30,51 @@ RSpec.describe "User create" do
     expect(json[:data][:attributes]).to have_key(:api_key)
   end
 
-  it 'returns full error messages' do
+  it 'returns full error messages (password matching)' do
     headers = {
       'Content-Type': 'application/json',
       'Accept': 'application/json'
     }
 
     user_params = {
-      "email": "me@hotmail.com",
-      "password": "1233",
-      "password_confirmation": "1234"
+      email: "me@hotmail.com",
+      password: "1233",
+      password_confirmation: "1234"
     }
 
-    error = "somethig"
+    error = "Password confirmation doesn't match Password"
 
-    post '/api/v1/users', headers: headers, params: JSON.generate(user_params)
+    post '/api/v1/users', headers: headers, params: user_params.to_json
     expect(response.status).to eq(400)
+    message = JSON.parse(response.body, symbolize_names: true)
+
+    expect(message[:body]).to eq(error)
   end
 
+  it 'returns full error messages (email already taken)' do
+    User.create!({
+      email: "me@hotmail.com",
+      password: "1234",
+      password_confirmation: "1234"
+    })
+
+    headers = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    }
+
+    user_params = {
+      email: "me@hotmail.com",
+      password: "1234",
+      password_confirmation: "1234"
+    }
+
+    error = "Email has already been taken"
+
+    post '/api/v1/users', headers: headers, params: user_params.to_json
+    expect(response.status).to eq(400)
+    message = JSON.parse(response.body, symbolize_names: true)
+
+    expect(message[:body]).to eq(error)
+  end
 end
