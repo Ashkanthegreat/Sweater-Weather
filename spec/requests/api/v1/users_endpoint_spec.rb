@@ -1,9 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe "User create" do
-  # before :each do
-  #   User.destroy_all
-  # end
   it 'can create a user' do
     headers = {
       'Content-Type': 'application/json',
